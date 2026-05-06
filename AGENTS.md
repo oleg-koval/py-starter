@@ -25,12 +25,25 @@ uv sync
 
 Run all four before submitting a PR. CI runs the same commands.
 
+## Pre-commit hooks
+
+Requires `pre-commit` (included in dev deps). Install once after `uv sync`:
+
+```bash
+make hooks
+```
+
+Hooks run ruff lint + format, ty check, pytest, and a 300-line file-length check
+on every commit. `git commit --no-verify` is rejected in code review.
+
 ## Conventions
 
 - Python 3.12+. Use modern syntax: `match`, PEP 695 generics, `|` unions.
 - Type-hint all public functions. Internal helpers may skip if obvious.
 - Docstrings on public APIs only. Style: short imperative summary line.
 - Tests live in `tests/`, mirror `src/` layout, use plain `assert`.
+  Prefer integration tests that exercise the public interface end-to-end.
+  Unit-test only pure functions with non-trivial branching.
 - No new top-level dependencies without discussion. Dev deps go in
   `dependency-groups.dev`.
 

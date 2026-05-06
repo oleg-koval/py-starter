@@ -25,6 +25,7 @@ dev = [
   "pytest-cov>=5.0",
   "ruff>=0.7",
   "ty>=0.0.1a1",
+  "pre-commit>=3.8",
 ]
 
 [build-system]
@@ -50,8 +51,17 @@ select = [
   "N",        # pep8-naming
   "SIM",      # simplify
   "RUF",      # ruff-specific
+  "C90",      # mccabe complexity
+  "PLR",      # pylint refactor (too-many-statements, too-many-branches)
 ]
 ignore = []
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-statements = 50
+max-branches = 12
 
 [tool.ruff.format]
 quote-style = "double"
