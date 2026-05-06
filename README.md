@@ -23,15 +23,23 @@ print(hello("Oleg"))  # Hello, Oleg!
 
 ## Development
 
-Requires [uv](https://docs.astral.sh/uv/).
+Requires [uv](https://docs.astral.sh/uv/) (one-time install):
 
-```bash
-uv sync                  # install deps
+``````````````````bash
+curl -LsSf https://astral.sh/uv/install.sh | sh   # macOS / Linux
+# or: brew install uv
+# Windows: powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+`````````````````
+
+Then:
+
+````````````````bash
+uv sync                  # install deps + create .venv
 uv run pytest            # run tests
 uv run ruff check --fix  # lint
 uv run ruff format       # format
 uv run ty check          # type-check
-```
+```````````````
 
 ## Contributing
 

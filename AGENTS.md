@@ -4,9 +4,17 @@ Instructions for AI coding agents (Claude Code, Codex, Cursor, Copilot).
 
 ## Setup
 
-```bash
+This project uses [uv](https://docs.astral.sh/uv/). If `uv` is not installed:
+
+``````````````bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+`````````````
+
+Then:
+
+````````````bash
 uv sync
-```
+```````````
 
 ## Commands
 
