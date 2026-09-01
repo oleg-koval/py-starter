@@ -35,3 +35,10 @@ jobs:
         run: uv run ty check
       - name: Test
         run: uv run pytest
+
+  file-length:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: File length cap (RULES.md §2.2 — 300 lines)
+        run: git ls-files '*.py' -z | xargs -0 --no-run-if-empty bash scripts/check-file-length.sh
