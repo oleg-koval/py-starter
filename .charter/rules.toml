@@ -1,0 +1,244 @@
+# Engineering contract as data. Shared across repos; do not edit per repo.
+# enforce: check = a command in checks.toml proves it; review = the independent
+# reviewer rules on it with proof; artifact = the PR body must carry its section.
+version = 1
+
+[[rule]]
+id = "C1"
+section = "Code"
+text = 'NEVER mutate in domain code: no `swap!`/`reset!`, volatiles, `ref.current =`, `push`/`splice`, property or `let` reassignment. At most one atom per stateful edge, changed only through `swap!` with a pure function.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C2"
+section = "Code"
+text = 'NEVER cast: no `as X`, `<X>value`, non-null `!`. Narrow with type guards or schemas.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C3"
+section = "Code"
+text = 'NEVER use `any` (TS `any`, Malli `:any`). Validate at the edges, keep maps open inside, never reject unknown keys deep in the code.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C4"
+section = "Code"
+text = 'Domain code NEVER imports HTTP, routes, schemas, api or contracts. No god modules.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C5"
+section = "Code"
+text = 'Side effects (DB, HTTP, clock, IO) live ONLY in a thin edge layer. Policy stays apart from mechanism. Nothing hides cost or control flow.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C6"
+section = "Code"
+text = 'NEVER break users. Evolve by adding; require less, promise more. A breaking change gets a new name.'
+enforce = ["review"]
+
+[[rule]]
+id = "C7"
+section = "Code"
+text = 'One concern per PR, under about 200 changed lines. Every commit builds and passes tests.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C8"
+section = "Code"
+text = 'NEVER hand-edit generated files. Change the source or the generator, then regenerate.'
+enforce = ["review"]
+
+[[rule]]
+id = "C9"
+section = "Code"
+text = 'Fail open outward, loud inward: the caller gets the fallback, and every fallback is logged and counted in a metric.'
+enforce = ["review"]
+
+[[rule]]
+id = "C10"
+section = "Code"
+text = 'NEVER commit secrets or passwords, in code, commits or PR bodies.'
+enforce = ["check"]
+
+[[rule]]
+id = "C11"
+section = "Thinking"
+text = 'Write the problem and its constraints down before coding.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C12"
+section = "Thinking"
+text = 'Design the data structures and their relationships first.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C13"
+section = "Thinking"
+text = 'Simple over easy: never braid concerns together.'
+enforce = ["review"]
+
+[[rule]]
+id = "C14"
+section = "Thinking"
+text = 'Clarity over cleverness: a trick that needs a comment gets rewritten.'
+enforce = ["review"]
+
+[[rule]]
+id = "C15"
+section = "Thinking"
+text = 'Domain rules are small, named, pure functions over plain data.'
+enforce = ["review"]
+
+[[rule]]
+id = "C16"
+section = "Thinking"
+text = 'Reuse before writing.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C17"
+section = "Thinking"
+text = 'When unsure, prototype both ways and compare.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C18"
+section = "Thinking"
+text = 'Every rule serves correctness, testability, readability or speed. A conflict is raised, never bent silently.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C19"
+section = "Data"
+text = 'Data is an immutable fact with its time. History stays append-only where it matters.'
+enforce = ["review"]
+
+[[rule]]
+id = "C20"
+section = "Data"
+text = 'Plain open maps with namespaced keys; no wrapper objects.'
+enforce = ["review"]
+
+[[rule]]
+id = "C21"
+section = "Data"
+text = 'Put knowledge in data: table- or map-driven dispatch over `cond` chains.'
+enforce = ["review"]
+
+[[rule]]
+id = "C22"
+section = "Data"
+text = 'Remove a special case by reshaping the data or the code, never by adding another `if`.'
+enforce = ["review"]
+
+[[rule]]
+id = "C23"
+section = "Functions and interfaces"
+text = 'One concern per function. 25 lines is a smell, single-use code may stay inline, never more than 3 levels of nesting.'
+enforce = ["check", "review"]
+
+[[rule]]
+id = "C24"
+section = "Functions and interfaces"
+text = 'Assert invariants in domain functions; fail loudly in dev and test.'
+enforce = ["review"]
+
+[[rule]]
+id = "C25"
+section = "Functions and interfaces"
+text = 'Least surprise: the same names, status codes, error shapes and paging everywhere.'
+enforce = ["review"]
+
+[[rule]]
+id = "C26"
+section = "Functions and interfaces"
+text = 'Every decision path is observable through structured logs and a metric. Quiet on success, loud on the unexpected.'
+enforce = ["review"]
+
+[[rule]]
+id = "C27"
+section = "Functions and interfaces"
+text = 'A comment states only a non-obvious "why", never what the code does.'
+enforce = ["review"]
+
+[[rule]]
+id = "C28"
+section = "Performance"
+text = 'Programmer time beats machine time. Optimize only measured hot paths.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C29"
+section = "Performance"
+text = 'Every hot path has a latency budget. Every performance claim carries a profile or benchmark.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C30"
+section = "Change and history"
+text = 'Make the smallest change that does the job. Fix only findings worth fixing.'
+enforce = ["artifact", "review"]
+
+[[rule]]
+id = "C31"
+section = "Change and history"
+text = 'Violations outside the diff are named as out of scope, never fixed silently.'
+enforce = ["review"]
+
+[[rule]]
+id = "C32"
+section = "Change and history"
+text = 'A failing-CI fix is the smallest change that turns it green. Old code is grandfathered.'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C33"
+section = "Change and history"
+text = 'A big refactor is a series of PRs, with a pure move first.'
+enforce = ["review"]
+
+[[rule]]
+id = "C34"
+section = "Change and history"
+text = 'A commit message says why the change exists and what breaks without it.'
+enforce = ["review"]
+
+[[rule]]
+id = "C35"
+section = "Change and history"
+text = 'NEVER force-push, and NEVER rebase a pushed branch.'
+enforce = ["review"]
+
+[[rule]]
+id = "C36"
+section = "Change and history"
+text = 'A regression comes before any feature. Undo it at once, flag off first where a flag exists.'
+enforce = ["review"]
+
+[[rule]]
+id = "C37"
+section = "Proof and process"
+text = 'Every claim is backed by a diff, test output, permalink or run URL.'
+enforce = ["review"]
+
+[[rule]]
+id = "C38"
+section = "Proof and process"
+text = 'No merge without an independent review of the diff file only.'
+enforce = ["review"]
+
+[[rule]]
+id = "C39"
+section = "Proof and process"
+text = 'Every PR body opens with a plain "TL;DR (for humans)".'
+enforce = ["artifact"]
+
+[[rule]]
+id = "C40"
+section = "Proof and process"
+text = 'Hooks act on output and never block. Starter repos stay generic templates.'
+enforce = ["review"]
