@@ -1,0 +1,27 @@
+name: Charter
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  charter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv sync --all-extras --dev
+      - name: Save pull request body for Charter
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s' "$PR_BODY" > .charter/pr-body.md
+      - uses: oleg-koval/charter@v0.1.2
+        with:
+          version: v0.1.2
+          dir: .charter
+          pr-body-file: .charter/pr-body.md

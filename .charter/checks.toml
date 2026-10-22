@@ -1,0 +1,74 @@
+# Starter-specific checks for the shared engineering contract.
+
+[[check]]
+id = "ci"
+rules = ["C7"]
+run = "uv run pytest && uv build"
+output = "exit"
+
+[[check]]
+id = "file-length"
+rules = ["C23"]
+run = "git ls-files '*.py' -z | xargs -0 --no-run-if-empty bash scripts/check-file-length.sh"
+output = "exit"
+
+[[waive]]
+rule = "C1"
+reason = "No Python AST check for this rule is configured yet; retain review enforcement."
+
+[[waive]]
+rule = "C2"
+reason = "No Python check for unsafe casts is configured yet; retain review enforcement."
+
+[[waive]]
+rule = "C3"
+reason = "No Python check for untyped any use is configured yet; retain review enforcement."
+
+[[waive]]
+rule = "C4"
+reason = "No dependency-boundary check is configured for this starter yet; retain review enforcement."
+
+[[waive]]
+rule = "C5"
+reason = "No side-effect-boundary check is configured for this starter yet; retain review enforcement."
+
+[[waive]]
+rule = "C10"
+reason = "Gitleaks is not installed in this starter's PR workflow yet; the missing secret scan is explicit."
+
+[[artifact]]
+heading = "TL;DR (for humans)"
+rules = ["C39"]
+first = true
+
+[[artifact]]
+heading = "Problem"
+rules = ["C11"]
+
+[[artifact]]
+heading = "Data design"
+rules = ["C12"]
+
+[[artifact]]
+heading = "Reuse"
+rules = ["C16"]
+
+[[artifact]]
+heading = "Alternatives"
+rules = ["C17"]
+
+[[artifact]]
+heading = "Rule conflicts"
+rules = ["C18"]
+
+[[artifact]]
+heading = "Performance"
+rules = ["C28", "C29"]
+
+[[artifact]]
+heading = "Scope"
+rules = ["C30", "C32"]
+
+[[artifact]]
+heading = "Proof"
+rules = ["C37"]
