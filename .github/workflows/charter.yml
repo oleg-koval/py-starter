@@ -16,12 +16,8 @@ jobs:
           enable-cache: true
       - run: uv python install 3.12
       - run: uv sync --all-extras --dev
-      - name: Save pull request body for Charter
-        env:
-          PR_BODY: ${{ github.event.pull_request.body }}
-        run: printf '%s' "$PR_BODY" > .charter/pr-body.md
-      - uses: oleg-koval/charter@v0.1.2
+      - uses: oleg-koval/charter@v0.2.0
         with:
-          version: v0.1.2
+          version: v0.2.0
+          report: github
           dir: .charter
-          pr-body-file: .charter/pr-body.md

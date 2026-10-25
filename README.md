@@ -56,3 +56,17 @@ Part of a set with shared conventions (AGENTS.md, Conventional Commits, MIT, Git
 ## License
 
 MIT - see [LICENSE](./LICENSE).
+
+## Charter reporting
+
+The pinned Charter v0.2.0 action owns flight summaries, annotations and the PR
+report publisher. This starter keeps its local policy and check mappings.
+`Charter` runs mapped code checks; `Charter PR` validates description sections
+and reruns on body edits without rebuilding. `Charter report` combines their
+current-head results into one bot comment after its workflow reaches the default
+branch. Its write permission is isolated from validation jobs; it never checks
+out PR code. Waivers remain visible and a report is not merge clearance.
+
+Release tags stay pinned. Future upgrades require an explicit change or a
+reviewed dependency-update PR. Repositories created from this template receive
+a snapshot and do not inherit later template changes automatically.
