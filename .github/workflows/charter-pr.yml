@@ -1,0 +1,27 @@
+name: Charter PR
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+permissions:
+  contents: read
+concurrency:
+  group: charter-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  pr-body:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: .charter
+      - name: Save PR body snapshot
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s' "$PR_BODY" > "$RUNNER_TEMP/charter-pr.md"
+      - uses: oleg-koval/charter@v0.2.0
+        with:
+          version: v0.2.0
+          report: github
+          checks: 'false'
+          pr-body-file: ${{ runner.temp }}/charter-pr.md
