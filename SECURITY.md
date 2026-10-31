@@ -2,16 +2,17 @@
 
 ## Supported Versions
 
-| Version      | Supported           |
-| ------------ | ------------------- |
-| Latest minor | Yes                 |
-| Older        | No                  |
+| Version        | Supported           |
+| -------------- | ------------------- |
+| Latest minor   | Yes                 |
+| Previous minor | Security fixes only |
+| Older          | No                  |
 
 ## Reporting a Vulnerability
 
 **Please do not open a public GitHub issue for security vulnerabilities.**
 
-Email **kvl.olg@gmail.com** with:
+Email **oleg@bizcuit.nl** with:
 
 1. A description of the vulnerability and its potential impact
 2. Steps to reproduce or a proof-of-concept
